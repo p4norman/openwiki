@@ -136,6 +136,8 @@ sources:
     resource: repo://test/visualize/visualize-graph.test.ts
   - id: openwiki-source-dbb4558a2e1f7159813c79c5
     resource: repo://test/x-connector-stream-isolation.test.ts
+  - id: openwiki-source-42403648c3f500ce06398039
+    resource: repo://tsconfig.client.json
   - id: openwiki-source-98d5ddb014a0fd4d678f6f2a
     resource: repo://tsconfig.json
   - id: openwiki-source-fbadcd8591b65031efaaedce
@@ -143,7 +145,7 @@ sources:
 generated: { by: "openwiki/0.7.2", at: "2026-10-13T08:15:00.712Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-13T08:15:00.712Z
+    at: 2026-10-19T08:13:50.485Z
 ---
 
 # Testing Guide

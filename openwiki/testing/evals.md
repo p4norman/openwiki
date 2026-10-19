@@ -45,7 +45,7 @@ sources:
 generated: { by: "openwiki/0.5.1", at: "2026-09-14T08:10:27.832Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-13T08:15:00.712Z
+    at: 2026-10-19T08:13:50.485Z
 ---
 
 # Evaluation Systems (LEDGER and DeepSWE)

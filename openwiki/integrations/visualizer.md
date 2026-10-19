@@ -3,9 +3,6 @@ type: integration
 title: Interactive Visualizer
 description: How the `openwiki visualize` command builds a link graph from wiki Markdown and OKF frontmatter, serves a live single-page reader over loopback HTTP, and exports a self-contained static site for hosting.
 tags: [visualizer, graph, static-export, cli, server, markdown-reader]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-13T08:15:00.712Z
 sources:
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
@@ -19,6 +16,8 @@ sources:
     resource: repo://src/visualize/client-lib.ts
   - id: openwiki-source-610ff51ff8da46ab065496a5
     resource: repo://src/visualize/client.ts
+  - id: openwiki-source-37e0e714b8257069ec052301
+    resource: repo://src/visualize/graph-types.ts
   - id: openwiki-source-d92f623adbf6b31c3542d58d
     resource: repo://src/visualize/graph.ts
   - id: openwiki-source-b0d5ccee7e5f7532bd8ed3f5
@@ -39,7 +38,10 @@ sources:
     resource: repo://test/visualize/visualize-client-lib.test.ts
   - id: openwiki-source-42403648c3f500ce06398039
     resource: repo://tsconfig.client.json
-generated: { by: "openwiki/0.5.2", at: "2026-09-22T08:09:45.637Z" }
+generated: { by: "openwiki/0.7.2", at: "2026-10-19T08:13:50.485Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-10-19T08:13:50.485Z
 ---
 
 # Interactive Visualizer
@@ -71,7 +73,15 @@ current working directory before use.
 both modes. It recursively collects `.md` files under the wiki root, reads each
 into a node, resolves inter-page links into directed edges, and returns a
 `WikiGraph` with a `root` basename, an ISO `generatedAt` timestamp, the sorted set
-of distinct node `types`, and the `nodes`/`edges` arrays.
+of distinct node `types`, and the `nodes`/`edges` arrays. The graph types
+themselves — `WikiNode`, `WikiEdge`, `WikiGraph`, and the frontmatter shape
+`WikiMeta` — are defined once in `src/visualize/graph-types.ts`, a module with no
+Node.js or DOM dependencies. `graph.ts` imports and re-exports those types so the
+Node.js loader exposes them, while the browser client (`client.ts` and
+`client-lib.ts`) imports them directly from `graph-types.ts`. Keeping the
+definitions in the dependency-free `graph-types.ts` is what lets one set of types
+span the server build and the separately compiled browser build without dragging
+Node APIs into the client bundle.
 
 Each file becomes one `WikiNode`. Its stable `id` is the path relative to the wiki
 root with the `.md` suffix removed. `splitFrontmatter` parses the small YAML subset
